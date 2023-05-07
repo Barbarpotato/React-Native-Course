@@ -169,3 +169,17 @@ export default function App() {
   );
 }
 ```
+# Styling using StyleSheet
+You can create stylesheets specific to each component and keep the stylesheets within the same file as the component. This will keep the styles closer to the component and makes it easier to reference.
+
+To create a stylesheet, you will use the `create` method. The styles can be stored within a `const`, as shown below:
+```js
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#495E57',
+  },
+});
+```
+
+
