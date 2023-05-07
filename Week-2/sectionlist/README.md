@@ -73,4 +73,4 @@ In this step, you will use the SectionList component to render the section heade
 In this step, you will style the new component that you have created to match the screenshots. Make sure to provide meaningful names to all your styles.
 
 ## Conclusion 
-By completing this exercise, you will demonstrate your understanding and ability to configure and utilize the SectionList component to render a large list of items by section. 
+By completing this exercise, you will demonstrate your understanding and ability to configure and utilize the SectionList component to render a large list of items by section.

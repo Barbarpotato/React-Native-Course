@@ -184,3 +184,48 @@ const Footer = () => (
   </Text>
 );
 ```
+
+# TextInput Component and its Features
+The feedback form will accept the user’s input via the virtual keyboard. To do this, React Native provides the TextInput component out-of-the-box.
+
+`import`
+Let’s go ahead and import the TextInput component, as shown below, along with the other necessary imports:
+```js
+import React, { useState } from 'react'; 
+
+import { ScrollView, StyleSheet, Text, TextInput } from 'react-native'; 
+```
+Note that you will have to import the useState hook as well. This will be used to keep track of the local state of all the user inputs within the feedback form.
+
+## Setting local state:
+The next step is to set up the state variables within the new FeedbackForm component. The default value for all these state variables will be an empty string.
+```js
+const [firstName, onChangeFirstName] = useState(''); 
+const [lastName, onChangeLastName] = useState(''); 
+const [message, onChangeMessage] = useState(''); 
+```
+You have set up the local state for the first name, last name, and a feedback message. Each of these will keep track of what the user types in the respective text input boxes.
+
+## Configure Text Input
+The next step is to configure the TextInput component. You will be rendering three text inputs for each box: first name, last name, and the message.
+
+You will pass a style, value, and onChangeText prop to each text input. The value here represents what the user is typing within the box, and it is the current value of the local state variable of that box. The onChangeText prop will call back the set state method of each of the local state variables.
+
+For instance, for the first name, the onChangeText will get triggered as the user is typing, and it will call the onChangeFirstName method and set the new or updated text to the firstName variable.
+```js
+     <TextInput 
+        style={styles.input} 
+        value={firstName} 
+        onChangeText={onChangeFirstName} 
+      /> 
+      <TextInput 
+        style={styles.input} 
+        value={lastName} 
+        onChangeText={onChangeLastName} 
+      /> 
+      <TextInput 
+        style={styles.messageInput} 
+        value={message} 
+        onChangeText={onChangeMessage} 
+      /> 
+```
