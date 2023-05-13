@@ -229,3 +229,194 @@ For instance, for the first name, the onChangeText will get triggered as the use
         onChangeText={onChangeMessage} 
       /> 
 ```
+
+## Tips and Tricks to handle the virtual keyboard
+### keyboardDismissMode
+A common problem you will encounter while developing React Native apps is that the virtual keyboard within a ScrollView will be constantly visible while you scroll through a page. You would have to tap outside of the text input and dismiss it. This could get annoying to the user. Instead, you can provide a seamless user experience by applying the keyboardDismissMode prop within your ScrollView component.
+
+Setting the prop value to `on-drag` will ensure the keyboard is dismissed when you start scrolling or dragging on the screen. This will be seamless for the user, who can always tap back on the text input box to open up the virtual keyboard again.
+```js
+<ScrollView keyboardDismissMode="on-drag"> 
+```
+The keyboardDismissMode prop by default has the value `none`, which means the drags do not dismiss the keyboard.
+
+### KeyboardAvoidingView
+Another handy component for managing the virtual keyboard is the KeyboardAvoidingView. As the name suggests, it is a component that automatically adjusts its height, position, or bottom padding based on the keyboard’s height so that it remains visible. In contrast, the virtual keyboard is still displayed. This component is part of the core react-native package and can be imported directly as follows:
+```js
+import { KeyboardAvoidingView } from 'react-native';
+```
+While using this component, you can set specific properties depending on whether it is an iOS or Android device. To determine that, you can use the Platform API, also available within React Native.
+```js
+import { Platform } from 'react-native';
+```
+
+#### Configuring KeyboardAvoidingView
+This component inherits all the props of View, making it essentially View with additional capabilities. Within the KeyboardAvoidingView component, you can pass the behavior prop. This prop determines how to react to the presence of the keyboard. Depending on the use case, three values can be passed to it: height, position and padding. 
+
+In this example, you can see how the Platform API sets the behavior value to padding for iOS devices and, height for all other devices.
+```js
+<KeyboardAvoidingView
+   style={styles.container}
+   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+```
+
+### Putting it all together 
+Finally, let’s find out how your code might look once you’ve applied both keyboardDismissMode and KeyboardAvoidingView together.
+```js
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+
+const FeedbackForm = () => {
+  // declare the variables
+  const [firstName, onChangeFirstName] = useState('');
+  const [lastName, onChangeLastName] = useState('');
+  const [message, onChangeMessage] = useState('');
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView keyboardDismissMode="on-drag">
+        <Text style={styles.headingSection}>
+          How was your visit to Little Lemon?
+        </Text>
+        <Text style={styles.infoSection}>
+          Little Lemon is a charming neighborhood bistro that serves simple food
+          and classic cocktails in a lively but casual environment. We would
+          love to hear your experience with us!
+        </Text>
+        <TextInput
+          style={styles.input}
+          value={firstName}
+          onChangeText={onChangeFirstName}
+        />
+        <TextInput
+          style={styles.input}
+          value={lastName}
+          onChangeText={onChangeLastName}
+        />
+        <TextInput
+          style={styles.messageInput}
+          value={message}
+          onChangeText={onChangeMessage}
+        />
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    fontSize: 16,
+    borderColor: 'EDEFEE',
+    backgroundColor: '#F4CE14',
+  },
+  messageInput: {
+    height: 100,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#F4CE14',
+  },
+  infoSection: {
+    fontSize: 24,
+    padding: 20,
+    marginVertical: 8,
+    color: '#EDEFEE',
+    textAlign: 'center',
+    backgroundColor: '#495E57',
+  },
+  headingSection: {
+    fontSize: 28,
+    padding: 20,
+    marginVertical: 8,
+    color: '#EDEFEE',
+    textAlign: 'center',
+    backgroundColor: '#495E57',
+  },
+});
+
+export default FeedbackForm;
+```
+
+# Common props of TextInput component
+
+## placeholder
+As the name suggests, this is the placeholder string displayed before the user enters anything into the text input box. By default, this will be empty.
+
+## multiline
+The multiline prop is Boolean; when set to true, the text input can be multiple lines. By default, it is set to false, and all the text that cannot fit within a single line is truncated and not visible to the user.
+
+The multiline prop has been set to true in the following code snippet for the message text input. This means the user can enter feedback for multiple lines.
+
+## maxLength
+As the name suggests, this prop limits the maximum number of characters that can be entered. This prop accepts a number as the value.
+
+## keyboardType
+The React Native TextInput component supports various native keyboard types on both iOS and Android. Here are <a href="https://lefkowitz.me/visual-guide-to-react-native-textinput-keyboardtype-options/">links</a> to the various platform-specific keyboards available.
+
+## secureTextEntry
+this typical of props prevent user to see the characters they are typing. for example use is password, the value of this props is boolean
+the defailt value is false.
+
+# Text Input Method
+## onFocus
+
+This call-back method is called when the text input is focused.
+
+In the feedback form for the Little Lemon app, let’s say you want to display an alert message when the first name text input is in focus. To do that, you can use the onFocus method and pass a rendering of the alert to it, as shown below. Here the alert comes from the Alert component, which is a built-in component in React Native.
+```js
+<TextInput 
+   style={styles.input} 
+   value={firstName} 
+   onChangeText={onChangeFirstName} 
+   placeholder={'First Name'} 
+   onFocus={() => {Alert.alert(“First name is focussed”)}} 
+/> 
+```
+
+## onBlur
+This call-back method is called when the text input is blurred or loses focus. Extending the same example, you can display an alert when the first name text input is blurred as follows:
+```js
+<TextInput 
+   style={styles.input} 
+   value={firstName} 
+   onChangeText={onChangeFirstName} 
+   placeholder={'First Name'} 
+   onFocus={() => {Alert.alert(“First name is focussed”)}} 
+   onBlur={() => {Alert.alert(“First name is now blurred”)}} 
+/> 
+```
+The alert that indicates that the first name is blurred will automatically display once the first name text input box loses focus.
+
+## clearButtonMode
+This is an exciting prop that is available only on iOS. It displays a clear button on the right side of the text view. This is only supported on single-line text inputs and iOS.
+
+The value is set to never by default and accepts other values such as always, unless-editing, and while-editing.
+```js
+<TextInput 
+   style={styles.input} 
+   value={firstName} 
+   onChangeText={onChangeFirstName} 
+   placeholder={'First Name'} 
+   clearButtonMode={“always”} 
+/> 
+```
+In the above code snippet, the clearButtonMode prop has been set to always. This means that the text input for the first name will always display the clear button, and clicking on it will automatically clear all the existing text. 
+
+In this reading, you learned about additional methods and props that can be used to customize the TextInput component.
