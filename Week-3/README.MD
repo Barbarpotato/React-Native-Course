@@ -41,3 +41,41 @@ Note that the Pressable component inherits all the styles of the View component,
     </Text> 
 </Pressable> 
 ```
+
+# Exploring the Image Component
+
+## Import 
+The Image component is a core component of React Native used to render images on the screen. You can import it along with the other components needed for the Welcome component as follows:
+```js
+import { View, Image, StyleSheet, Text } from 'react-native'; 
+```
+
+## Folder
+Create an img folder within your project under the src folder. Make sure to add the littleLemonLogo.png to the img folder. Now the logo is part of your Little Lemon project and can be accessed by the Image component directly.
+
+You can use the image below for the logo and save it as the littleLemonHeader.png
+
+## Configuring Image Component
+The Image component is configured as follows:
+```js
+<Image style={styles.logo} source={require('img/littleLemonLogo.png')} />
+```
+
+## Exploring props to the Image Component
+
+### resizeMode
+The most commonly used prop for the Image component is `resizeMode`. It determines how to resize an image when the window frame does not match the raw image dimensions.
+
+resizeMode can accept the following values:
+
+- cover: This is used to scale the image uniformly and maintain the image’s aspect ratio. Below is an example of the picture with the menu with resizeMode prop set to cover.
+- contain : This scales the image uniformly so that both dimensions of the image will be equal to or less than the corresponding dimension of the view.
+- stretch: This is used to scale with height independently and may change the original image's aspect ratio.
+- repeat: The image is repeated to cover the frame of the view. 
+- center: The image is centered in the view along with both dimensions. 
+
+### accessible
+It is always good to keep accessibility as a priority while developing applications. The accessible prop accepts a Boolean true or false. When it is set to true, it indicates that the image is an accessibility element.
+
+### accessibilityLabel
+Once the image is set to be accessible, it is time to provide an accessible label for the image. This is the text that the screen reader reads when the user interacts with the image. Make sure to give a meaningful and descriptive name to the prop.
