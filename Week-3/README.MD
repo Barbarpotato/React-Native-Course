@@ -79,3 +79,133 @@ It is always good to keep accessibility as a priority while developing applicati
 
 ### accessibilityLabel
 Once the image is set to be accessible, it is time to provide an accessible label for the image. This is the text that the screen reader reads when the user interacts with the image. Make sure to give a meaningful and descriptive name to the prop.
+
+
+# Hooks in React Native
+## Exploring the useColorScheme hook
+### Import 
+The good news is that the useColorScheme hook is part of the core react-native package and can be directly imported. Here is how the hook can be imported from React Native.
+```js
+import { useColorScheme } from 'react-native'; 
+```
+
+### Utilizing useColorScheme
+Within the Welcome component, you can directly initialize the useColorScheme hook. It returns the colorScheme object as shown below.
+```js
+const colorScheme = useColorScheme();
+```
+Now the colorScheme can have the following values:
+- dark: The user prefers a dark color theme 
+- light: The user prefers a light color theme 
+- null: No preference from user 
+Depending on the settings within the user’s device, the colorScheme value is updated.
+
+Now within the Welcome component, you can update the background color of the view depending on whether the colorScheme is light or dark, as shown below:
+```js
+const Welcome = () => { 
+  const colorScheme = useColorScheme(); 
+
+  return ( 
+   <ScrollView 
+      style={[ 
+        styles.container, 
+        colorScheme === 'light' 
+          ? { backgroundColor: '#fff' } 
+          : { backgroundColor: '#333333' }, 
+      ]}> 
+      <Image 
+        style={styles.logo} 
+        source={require('./img/littleLemonLogo.png')} 
+        resizeMode="center" 
+        accessible={true} 
+        accessibilityLabel={'Little Lemon Logo'} 
+      /> 
+
+      <Text style={styles.regular}>Color Scheme: {colorScheme}</Text> 
+    </ScrollView> 
+  ); 
+}; 
+
+export default Welcome; 
+```
+
+## Explore the useWindowDimensions hook
+### Import
+The good news is that the useWindowDimensions hook is part of the core react-native package and can be directly imported. Here is how it can be imported:
+```js
+import { useWindowDimensions } from 'react-native'; 
+```
+
+### Utilizing useWindowDimensions
+Within the Welcome component, you can directly initialize the useWindowDimensions hook. It returns the window object as shown below.
+```js
+const window = useWindowDimensions();
+// or de-structuring the window
+const {height, width, fontScale} = useWindowDimensions();
+```
+
+Now within the Welcome component, you can obtain the window dimensions and print them on the screen as follows:
+```js
+const Welcome = () => { 
+  const window = useWindowDimensions(); 
+  return ( 
+    <ScrollView style={styles.container}> 
+      <Image 
+        style={styles.logo} 
+        source={require('./img/littleLemonLogo.png')} 
+        resizeMode="center" 
+        accessible={true} 
+        accessibilityLabel={'Little Lemon Logo'} 
+      /> 
+      <Text style={styles.title}> 
+        Little Lemon, your local Mediterranean Bistro 
+      </Text> 
+      <Text style={styles.regular}>Window Dimensions</Text> 
+      <Text style={styles.regular}>Height: {window.height}</Text> 
+      <Text style={styles.regular}>Width: {window.width}</Text> 
+      <Text style={styles.regular}>Font scale: {window.fontScale}</Text> 
+    </ScrollView> 
+  ); 
+}; 
+
+export default Welcome; 
+```
+
+## Exploring other community hooks
+### Install
+The first step is to ensure that you have installed the community hooks package using the following statement:
+```
+npm install @react-native-community/hooks
+```
+
+Once this package is installed, you can access all the community package hooks.
+### useDeviceOrientationHook
+This hook can determine if the user’s mobile device is viewed in landscape or portrait mode. You can utilize this hook to determine the orientation if your app needs to support both modes.
+
+First, you can import the hook from the react-native-community package. Then you can directly use the hook within your React component.
+```js
+import { useDeviceOrientation } from '@react-native-community/hooks' 
+
+const orientation = useDeviceOrientation() 
+ 
+console.log('is orientation portrait: ', orientation.portrait) 
+console.log('is orientation landscape: ', orientation.landscape) 
+```
+The useDeviceOrientation hook returns the orientation object. The object has two values: portrait and landscape.
+### useAppStateHook
+The useAppState hook is quite useful. This hook is used to determine the current app state. It can be active, background or inactive (iOS only). This determines when the user puts the app in a closed, background, inactive or active state.
+
+This information is helpful to the developer to take specific necessary actions within the app, depending on whether the app is actively running or in the background. For example, specific applications like banking applications may log out the user after a particular time of inactivity or when the app is in the background.
+
+Observe the code below, which uses useAppState to store text from the clipboard within the app:
+```js
+import { useClipboard } from '@react-native-community/hooks' 
+
+// Inside the component 
+
+const [data, setString] = useClipboard() 
+
+<Text>{data}</Text> 
+
+<Button title='Update Clipboard' onPress={() => setString('new clipboard data')}>Set Clipboard</Button> 
+```
