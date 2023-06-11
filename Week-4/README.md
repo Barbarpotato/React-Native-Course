@@ -128,3 +128,42 @@ export default function App() {
   );
 }
 ```
+
+## Navigating to a Screen
+### The Navigation Prop
+You use React Navigation for a similar concept in the mobile world. You will use the navigation prop that gets passed down to all the screen components. Using the navigation prop, you can move between the different screens. such as 
+
+Let’s explore the code to do that. 
+
+In the WelcomeScreen component below, notice that navigation has been passed as a prop.
+```js
+const WelcomeScreen = ({ navigation }) => { 
+  return ( 
+    <View style={styles.container}> 
+      <Image 
+        style={styles.logo} 
+        source={require('../img/LittleLemonLogo.png')} 
+      /> 
+      <Text style={styles.title}> 
+        Little Lemon, your local Mediterranean Bistro 
+      </Text> 
+      <Pressable onPress={() => navigation.navigate('Menu')}> 
+        <Text style={styles.buttonText}>View Menu</Text> 
+      </Pressable> 
+    </View> 
+  ); 
+};  
+```
+This prop is then used within the Pressable component. When the user clicks on the View Menu text on this welcome screen, they will be taken to the Menu screen, as shown in the code snippet below.
+
+The navigate function on the navigation prop is passed the name of the route that you would like the screen to move to. 
+
+Note that if you call navigation.navigate with a route that has not been defined in the navigator yet, it will simply print an error within the development mode and not show any errors within production mode. This will be a silent error and will not impact the user, other than nothing would happen when they click on the button to move to a non-existent screen.
+
+### Summary
+- navigation.navigate('RouteName') pushes a new route to the native stack navigator if it's not already in the stack, otherwise it jumps to that screen.
+- We can call navigation.push('RouteName') as many times as we like and it will continue pushing routes.
+- The header bar will automatically show a back button, but you can programmatically go back by calling navigation.goBack(). On Android, the hardware back button just works as expected.
+- You can go back to an existing screen in the stack with navigation.navigate('RouteName'), and you can go back to the first screen in the stack with navigation.popToTop().
+- The navigation prop is available to all screen components (components defined as screens in route configuration and rendered by React Navigation as a route).
+

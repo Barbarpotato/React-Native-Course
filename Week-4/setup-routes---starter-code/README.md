@@ -8,6 +8,7 @@ Please note that you will not be able to move between the screens at the end of 
 Below you'll find screenshots of the Login screen and the Welcome screen for your reference.
 ![images](./img/setup-1.png)
 ![images](./img/setup-2.png)
+<br>
 Once you complete this exercise you will see the following screen. Note that you cannot move between the screens yet.
 ![images](./img/setup-3.png)
 
