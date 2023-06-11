@@ -20,3 +20,4 @@ Once you have the information on whether the user is on light mode or dark mode 
 
 ## Conclusion
 By completing this exercise, you will demonstrate your understanding and ability to configure hooks in React Native.
+
