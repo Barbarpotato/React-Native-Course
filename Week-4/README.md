@@ -167,3 +167,76 @@ Note that if you call navigation.navigate with a route that has not been defined
 - You can go back to an existing screen in the stack with navigation.navigate('RouteName'), and you can go back to the first screen in the stack with navigation.popToTop().
 - The navigation prop is available to all screen components (components defined as screens in route configuration and rendered by React Navigation as a route).
 
+## Exploring Tab Navigation
+### Installation
+To begin using the tab navigator, you must first install the following package within your application.
+```
+npm install @react-navigation/bottom-tabs
+```
+This command will install the bottom-tabs package from React Navigation.
+### Imports
+Within your code, the first step is to ensure that you import the createBottomTabNavigator as shown below:
+```js
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+```
+
+### Configuring Tab Navigation
+The next step is to create an instance of the createBottomTabNavigator as shown below:
+```js
+const Tab = createBottomTabNavigator();
+```
+This will return an object with two properties; the `navigator` and the `screen`. Again this is very similar to the Stack Navigator API you have already learned about.
+
+Within your root App component, you then add the following code:
+```js
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Welcome" component={WelcomeScreen} />
+        <Tab.Screen name="Menu" component={MenuScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+### Customizing Tab Navigation
+To customize your tab navigator further, you can provide icons for each tab, colors for the icons, and change the colors based on whether the icon is active or inactive. 
+
+To add icons, use the vector-icons package that comes as default with Expo. There is no additional setup needed to utilize it. You can use any library of your choice, but for this demonstration, use an open-source library called Ionicons.
+
+To do this, you will first import Ionicons from the vector-icons package:
+```js
+import { Ionicons } from '@expo/vector-icons';
+```
+
+### Screen Options
+Next, within the Navigator, you can add the customization using the screenOptions prop, as shown below:
+```js
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Welcome') {
+            iconName = focused
+              ? 'ios-information-circle'
+              : 'ios-information-circle-outline';
+          } else if (route.name === 'Menu') {
+            iconName =  'ios-list';
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+      })}>
+     <Tab.Screen name="Welcome" component={WelcomeScreen} />
+      <Tab.Screen name="Menu" component={MenuScreen} />
+    </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+```
