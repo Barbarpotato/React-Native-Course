@@ -240,3 +240,57 @@ export default function App() {
   );
 }
 ```
+
+## Exploring Drawer Navigation
+### Installation
+To begin using the drawer navigator, you will first need to install the following package within your application.
+```
+npm install @react-navigation/drawer
+```
+### Imports
+Within your code, the first step is to ensure that you import the createDrawerNavigator as shown below:
+```js
+import { createDrawerNavigator } from '@react-navigation/drawer';
+```
+
+### Configuring Drawer Navigation
+The next step is to create an instance of the createDrawerNavigator as shown below:
+```js
+const Drawer = createDrawerNavigator ();
+```
+
+This will return an object with two properties; the navigator and the screen. Again, this is very similar to the Stack and Tab Navigator API you have already learned about.
+
+Within your root App component, you will then add the Drawer Navigator:
+```js
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen name="Welcome" component={WelcomeScreen} />
+        <Drawer.Screen name="Menu" component={MenuScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+### Customizing Drawer Navigation
+You can customize your drawer navigator further. You can provide a screen option to customize the drawer position as follows:
+```js
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator
+	    useLegacyImplementation
+        screenOptions={{ drawerPosition: “right” }}>
+        <Drawer.Screen name="Welcome" component={WelcomeScreen} />
+        <Drawer.Screen name="Menu" component={MenuScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+Adding the screen option drawerPosition allows you to customize the drawer’s position. 
+
+In this reading, you learned how to set up, configure and customize the drawer navigator to move between screens in React Native. 
